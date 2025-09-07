@@ -41,12 +41,10 @@ jobs:
       - name: Build and push Docker images
         uses: docker/build-push-action@v5
         with:
-          context: .  # Dockerfile 所在目录（默认根目录）
+          context: 。  # Dockerfile 所在目录（默认根目录）
           push: true  # 构建完成后推送到 DockerHub
           platforms: |  # 目标架构：x64 和 arm64
             linux/amd64
             linux/arm64
           tags: |  # 镜像标签（替换为你的 DockerHub 仓库名）
             ${{ secrets.DOCKERHUB_USERNAME }}/home:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/home:${{ github.sha }}  # 基于 commit SHA 的唯一标签
-            ${{ secrets.DOCKERHUB_USERNAME }}/home:${{ github.ref_name }}  # 基于分支名的标签（如 dev、master）
