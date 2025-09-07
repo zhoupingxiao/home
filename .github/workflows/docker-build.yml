@@ -41,7 +41,7 @@ jobs:
       - name: Build and push Docker images
         uses: docker/build-push-action@v5
         with:
-          context: 。  # Dockerfile 所在目录（默认根目录）
+          context: .  # Dockerfile 所在目录（默认根目录）
           push: true  # 构建完成后推送到 DockerHub
           platforms: |  # 目标架构：x64 和 arm64
             linux/amd64
