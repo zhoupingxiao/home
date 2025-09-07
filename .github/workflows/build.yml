@@ -42,5 +42,58 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: Home
+          name: 主页
           path: dist
+
+name: Build and Push Multi-Platform Docker Images
+
+# 触发条件：推送到 dev、master 分支或手动触发（与现有工作流保持分支一致性）
+on:
+  push:
+    branches:
+      - dev
+      - master
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest  # 多平台构建需基于 Linux 环境
+    steps:
+      # 检出代码
+      - name: Checkout repository
+        uses: actions/checkout@v4.1.1
+
+      # 复制环境变量文件（与现有构建流程保持一致）
+      - name: Copy .env.example to .env if not exists
+        run: |
+          if [ ! -f .env ]; then
+            cp .env.example .env
+            echo "Copied .env.example to .env"
+          else
+            echo ".env file already exists, skipping copy"
+          fi
+
+      # 设置 Docker Buildx（支持多平台构建）
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # 登录 DockerHub
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # 构建并推送多平台镜像
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v5
+        with:
+          context: .  # Dockerfile 所在目录（默认根目录）
+          push: true  # 构建完成后推送到 DockerHub
+          platforms: |  # 目标架构：x64 和 arm64
+            linux/amd64
+            linux/arm64
+          tags: |  # 镜像标签（替换为你的 DockerHub 仓库名）
+            ${{ secrets.DOCKERHUB_USERNAME }}/home:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/home:${{ github.sha }}  # 基于 commit SHA 的唯一标签
+            ${{ secrets.DOCKERHUB_USERNAME }}/home:${{ github.ref_name }}  # 基于分支名的标签（如 dev、master）
