@@ -8,5 +8,10 @@
     "icon": "Book",
     "name": "导航",
     "link": "https://hao.diggoo.xyz/"
+  },
+  {
+    "icon": "ShoppingBag",
+    "name": "苹果托管",
+    "link": "https://applo.cc/buy/lepidus"
   }
 ]
