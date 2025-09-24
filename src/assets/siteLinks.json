@@ -11,12 +11,17 @@
   },
   {
     "icon": "ShoppingBag",
-    "name": "苹果托管",
+    "name": "苹果托管专业版",
     "link": "https://applo.cc/buy/lepidus"
   },
   {
     "icon": "Fish",
     "name": "闲鱼店铺",
     "link": "https://m.tb.cn/h.S1ijMIj?tk=zLeb4tdYqbz"
+  },
+  {
+    "icon": "ShoppingBag",
+    "name": "发卡网-什么都有",
+    "link": "https://faka.diggoo.cn"
   }
 ]
