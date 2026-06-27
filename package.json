@@ -1,11 +1,17 @@
 {
   "name": "home",
   "author": "imsyy",
-  "github": "https://github.com/imsyy/home",
-  "home": "https://imsyy.top",
+  "github": "https://github.com/zhoupingxiao/home",
+  "home": "https://diggoo.cn",
   "private": true,
   "version": "4.1.4",
   "type": "module",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "vue-demi"
+    ]
+  },
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
